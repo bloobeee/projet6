@@ -1,0 +1,70 @@
+section {
+    margin: 50px 0
+}
+
+h1 {
+    display: flex;
+    justify-content: center;
+    font-family: 'Work Sans';
+}
+
+.gallery {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 102px 102px 102px 102px 102px;
+    grid-column-gap: 10px;
+    grid-row-gap: 10px;
+    justify-content: center;
+}
+
+.gallery img {
+    width: 100%;
+
+}
+
+.gallery figure {
+    margin: 0px;
+}
+
+#contact {
+    width: 50%;
+    margin: auto;
+}
+
+#contact>* {
+    text-align: center;
+
+}
+
+
+
+#contact form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#contact input {
+    height: 36px;
+    font-size: 14px;
+    border: none;
+    display: flex;
+    justify-content: center;
+}
+
+
+input[type="submit"] {
+    font-family: 'Syne';
+    font-weight: 700;
+    color: white;
+    background-color: #1D6154;
+    width: 237px;
+    text-align: center;
+    border-radius: 60px;
+
+}
+
+.supp {
+    color: #D65353;
+    margin-top: 30px;
+}
