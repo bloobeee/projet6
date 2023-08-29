@@ -1,5 +1,5 @@
 function createElement (element) {
-    let gallery = document.querySelector('.gallery')
+    let gallery = document.querySelector('.modalGallery')
         let figure = document.createElement('figure');/*Déclare la variable figure qui crée un élément figure */
         let img = document.createElement('img');/*Déclare la variable img qui crée un élément img*/
         let figcaption = document.createElement('figcaption');/*Déclare la variable figcaption qui crée un élément figcaption*/
