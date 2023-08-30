@@ -64,6 +64,7 @@ function openmodal() {
       figure.appendChild(deleteIcon);
       figcaption.appendChild(deleteIcon);
       
+      
     });
   });
 }

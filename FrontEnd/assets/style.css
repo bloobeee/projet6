@@ -347,3 +347,13 @@ html{
 .modalFig{
 	width: 100%;
 }
+
+.projet{
+	display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.modifier{
+	padding-top: 10px;
+}
