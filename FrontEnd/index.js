@@ -46,29 +46,40 @@ function openmodal() {
   let modifier = document.querySelector('.modifier');
   let modal = document.querySelector('.modal');
   let modalBody = document.querySelector('.modalContent');
+  let imgModal = document.querySelector('.imgModal');
   modifier.addEventListener('click', () => {
     modal.style.display = "flex";
     alldata.forEach(element => {
       let figure = document.createElement('figure');
       let img = document.createElement('img');
-      let figcaption = document.createElement('figcaption');
       img.src = element.imageUrl;
       let deleteIcon = document.createElement('i');
-      deleteIcon.classList.add('fa-solid', 'fa-trash');
+      deleteIcon.classList.add('fa-solid', 'fa-trash-can');
       figure.classList.add('modalFig');
       img.classList.add('modalImg');
-      figcaption.classList.add('modalFigCaption');
+      figure.dataset.id = element.id;
       modalBody.appendChild(figure);
+      imgModal.appendChild(figure);
       figure.appendChild(img);
-      figure.appendChild(figcaption);
       figure.appendChild(deleteIcon);
-      figcaption.appendChild(deleteIcon);
-      
-      
+
+      deleteIcon.addEventListener('click', trashWork);
+
     });
   });
 }
 
+function trashWork(event) {
+  let id = event.target.parentElement.dataset.id
+  console.log(sessionStorage.getItem("token"));
+  fetch(`http://localhost:5678/api/works/${id}`, {
+    method: 'DELETE',
+    headers: {
+      Authorization: `Bearer ${sessionStorage.getItem("token")}`
+    }
+  })
+  console.log(id);
+}
 
 
 
@@ -128,9 +139,17 @@ fetch('http://localhost:5678/api/works')
 
 window.addEventListener("load", function () {
   let loginButton = document.getElementById("login");
+  let modifier = document.querySelector('.modifier');
+  let logomodifier =  document.querySelector('.logoModifier');
   /*Vérifier si un token est présent dans le sessionStorage*/
   if (sessionStorage.getItem("token")) {
     loginButton.textContent = "logout";
+    modifier.style.display = "block"; 
+    logomodifier.style.display =  "flex"; 
+  } else {
+    loginButton.textContent = "login";
+    modifier.style.display = "none"; // Masquer le texte "Modifier"
+    logomodifier.style.display = "none";
   }
   openmodal();
 
@@ -140,6 +159,9 @@ window.addEventListener("load", function () {
       /*Effacer le token du sessionStorage*/
       sessionStorage.removeItem("token");
       loginButton.textContent = "login";
+      modifier.style.display = "none";
+      logomodifier.style.display = "none";
+      
 
       if (!isPageRefreshed) {
         isPageRefreshed = true;
