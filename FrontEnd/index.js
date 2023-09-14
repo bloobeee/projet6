@@ -9,6 +9,9 @@ function createElement(element) {
   img.src = element.imageUrl;/*On dit que img.src = a l'url fournie par l'api*/
   img.alt = element.title;/*on dit que img.alt = le titre fourni par l'api*/
   figcaption.textContent = element.title;/*on dit que figcaption.textContent = le titre fourni par l'api*/
+  figure.dataset.id = element.id;
+  
+  
   figure.appendChild(img);/*Permet d'ajouter le contenue img dans la balise figure*/
   figure.appendChild(figcaption);/*Permet d'ajouter le contenue figcaption dans la balise figure*/
   gallery.appendChild(figure);/*Permet d'ajouter le contenue figure dans la balise gallery*/
@@ -43,11 +46,11 @@ function createfiltres(data) {
 }
 
 function openmodal() {
-  let modifier = document.querySelector('.modifier');
+  let boutonModifier = document.querySelector('.boutonModifier');
   let modal = document.querySelector('.modal');
   let modalBody = document.querySelector('.modalContent');
   let imgModal = document.querySelector('.imgModal');
-  modifier.addEventListener('click', () => {
+  boutonModifier.addEventListener('click', () => {
     modal.style.display = "flex";
     alldata.forEach(element => {
       let figure = document.createElement('figure');
@@ -57,7 +60,7 @@ function openmodal() {
       deleteIcon.classList.add('fa-solid', 'fa-trash-can');
       figure.classList.add('modalFig');
       img.classList.add('modalImg');
-      figure.dataset.id = element.id;
+      figure.dataset.modalId = element.id;
       modalBody.appendChild(figure);
       imgModal.appendChild(figure);
       figure.appendChild(img);
@@ -70,7 +73,9 @@ function openmodal() {
 }
 
 function trashWork(event) {
-  let id = event.target.parentElement.dataset.id
+  let id = event.target.parentElement.dataset.modalId
+  let gallery = document.querySelector('.gallery')
+
   console.log(sessionStorage.getItem("token"));
   fetch(`http://localhost:5678/api/works/${id}`, {
     method: 'DELETE',
@@ -78,6 +83,14 @@ function trashWork(event) {
       Authorization: `Bearer ${sessionStorage.getItem("token")}`
     }
   })
+    .then(response => {
+      if (response.ok) {/*Permet de vérifier si al réponse et pas null*/
+        event.target.parentElement.remove();
+        document.querySelector(`[data-id="${id}"]`).remove();
+      } else {
+        throw new Error(response.statusText);/*si la reponse est incorrect alors il renvoie l'erreur*/
+      }
+    })
   console.log(id);
 }
 
@@ -139,17 +152,14 @@ fetch('http://localhost:5678/api/works')
 
 window.addEventListener("load", function () {
   let loginButton = document.getElementById("login");
-  let modifier = document.querySelector('.modifier');
-  let logomodifier =  document.querySelector('.logoModifier');
+  let boutonModifier = document.querySelector('.boutonModifier');
   /*Vérifier si un token est présent dans le sessionStorage*/
   if (sessionStorage.getItem("token")) {
     loginButton.textContent = "logout";
-    modifier.style.display = "block"; 
-    logomodifier.style.display =  "flex"; 
+    boutonModifier.style.display = "flex";
   } else {
     loginButton.textContent = "login";
-    modifier.style.display = "none"; // Masquer le texte "Modifier"
-    logomodifier.style.display = "none";
+    boutonModifier.style.display = "none";
   }
   openmodal();
 
@@ -161,7 +171,7 @@ window.addEventListener("load", function () {
       loginButton.textContent = "login";
       modifier.style.display = "none";
       logomodifier.style.display = "none";
-      
+
 
       if (!isPageRefreshed) {
         isPageRefreshed = true;
