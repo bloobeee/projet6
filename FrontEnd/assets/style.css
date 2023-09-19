@@ -329,6 +329,7 @@ html {
 	display: flex;
 	justify-content: center;
 	padding-top: 10%;
+	padding-bottom: 50px;
 }
 
 .buttonModal {
@@ -379,4 +380,17 @@ html {
 	color: white;
 	padding: 5px;
 	border-radius: 2px;
+}
+
+.fa-x{
+	display: flex;
+	justify-content: end;
+    margin: 20px;
+
+}
+
+.modalPosition{
+	display: flex;
+    align-items: center;
+    flex-direction: column;
 }
