@@ -347,7 +347,7 @@ html {
 }
 
 .modalFig {
-	width: 75px;
+	width: 90px;
 	position: relative;
 }
 
@@ -370,6 +370,8 @@ html {
 	display: flex;
 	flex-direction: row;
 	flex-wrap: wrap;
+	padding-left: 60px;
+	gap: 20px;
 }
 
 .fa-trash-can {
@@ -382,7 +384,7 @@ html {
 	border-radius: 2px;
 }
 
-.fa-x{
+.croix{
 	display: flex;
 	justify-content: end;
     margin: 20px;
@@ -393,4 +395,8 @@ html {
 	display: flex;
     align-items: center;
     flex-direction: column;
+	border-top: #B3B3B3 1px solid;
+	padding-top: 25px;
+    margin-top: 36px;
+
 }

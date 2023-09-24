@@ -10,8 +10,8 @@ function createElement(element) {
   img.alt = element.title;/*on dit que img.alt = le titre fourni par l'api*/
   figcaption.textContent = element.title;/*on dit que figcaption.textContent = le titre fourni par l'api*/
   figure.dataset.id = element.id;
-  
-  
+
+
   figure.appendChild(img);/*Permet d'ajouter le contenue img dans la balise figure*/
   figure.appendChild(figcaption);/*Permet d'ajouter le contenue figcaption dans la balise figure*/
   gallery.appendChild(figure);/*Permet d'ajouter le contenue figure dans la balise gallery*/
@@ -45,11 +45,17 @@ function createfiltres(data) {
 
 }
 
+
 function openmodal() {
   let boutonModifier = document.querySelector('.boutonModifier');
   let modal = document.querySelector('.modal');
   let modalBody = document.querySelector('.modalContent');
   let imgModal = document.querySelector('.imgModal');
+  let croix = document.querySelector('.croix');
+  let buttonModal = document.querySelector('.buttonModal');
+  
+
+
   boutonModifier.addEventListener('click', () => {
     modal.style.display = "flex";
     alldata.forEach(element => {
@@ -69,6 +75,27 @@ function openmodal() {
       deleteIcon.addEventListener('click', trashWork);
 
     });
+    croix.addEventListener('click', () => {
+      modal.style.display = "none";
+    })
+  })
+
+  buttonModal.addEventListener('click', () => {
+    modalBody.innerHTML = ""; 
+    
+    let croixIcon = document.createElement('i');
+    let retourIcon = document.createElement('i');
+    let divIcon = document.createElement('div');
+
+
+    croixIcon.classList.add('fa-solid', 'fa-x');
+    retourIcon.classList.add('fa-solid', 'fa-arrow-left');
+    divIcon.classList.add('divIcon');
+
+    modalBody.appendChild(divIcon);
+    modalBody.appendChild(croixIcon);
+    modalBody.appendChild(retourIcon);
+
   });
 }
 
