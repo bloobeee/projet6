@@ -1,7 +1,7 @@
 
 let alldata = {};
 
-function createElement(element) {
+function createGalleryElement(element) {
   let gallery = document.querySelector('.gallery')
   let figure = document.createElement('figure');/*Déclare la variable figure qui crée un élément figure */
   let img = document.createElement('img');/*Déclare la variable img qui crée un élément img*/
@@ -28,7 +28,7 @@ function createfiltres(data) {
 
   allButton.addEventListener('click', () => {
     deleteworks();
-    addAllWorks();
+    addAllWorks(); 
   });
 
 
@@ -46,19 +46,13 @@ function createfiltres(data) {
 }
 
 
-function openmodal() {
-  let boutonModifier = document.querySelector('.boutonModifier');
-  let modal = document.querySelector('.modal');
-  let modalBody = document.querySelector('.modalContent');
+function addWorksModal() {
+  
+  let modalBody = document.querySelector('.modalContentGallery');
   let imgModal = document.querySelector('.imgModal');
-  let croix = document.querySelector('.croix');
-  let buttonModal = document.querySelector('.buttonModal');
 
-
-
-  boutonModifier.addEventListener('click', () => {
-    modal.style.display = "flex";
-    alldata.forEach(element => {
+  getWorks().then(data => {
+    data.forEach(element => {
       let figure = document.createElement('figure');
       let img = document.createElement('img');
       img.src = element.imageUrl;
@@ -71,19 +65,38 @@ function openmodal() {
       imgModal.appendChild(figure);
       figure.appendChild(img);
       figure.appendChild(deleteIcon);
-
+  
       deleteIcon.addEventListener('click', trashWork);
+    })
+  })
+}
 
-    });
+
+function addClicsModal() {
+  let boutonModifier = document.querySelector('.boutonModifier');
+  let modal = document.querySelector('.modal');
+  let modalContentAddWork = document.querySelector('.modalContentAddWork');
+  let modalContentGallery = document.querySelector('.modalContentGallery');
+  let imgModal = document.querySelector('.imgModal');
+  let croix = document.querySelector('.croix');
+  let buttonModal = document.querySelector('.buttonModal');
+
+
+
+  boutonModifier.addEventListener('click', () => {
+    modal.style.display = "flex";
+    modalContentAddWork.style.display = "none";
+
     croix.addEventListener('click', () => {
       modal.style.display = "none";
     })
   })
 
   buttonModal.addEventListener('click', () => {
-    modalBody.innerHTML = "";
+    modalContentGallery.style.display = "none";
+    modalContentAddWork.style.display = "flex";
 
-    let retourIcon = document.createElement('i');
+   /* let retourIcon = document.createElement('i');
     let croixIcon = document.createElement('i');
     let divIcon = document.createElement('div');
     let textPhoto = document.createTextNode('Ajout photo');
@@ -98,17 +111,22 @@ function openmodal() {
     boutonPhoto.classList.add('buttonPhoto');
 
 
-    modalBody.appendChild(divIcon);
+    modalContentGallery.appendChild(divIcon);
     divIcon.appendChild(retourIcon);
     divIcon.appendChild(croixIcon);
-    modalBody.appendChild(ajouterPhoto);
+    modalContentGallery.appendChild(ajouterPhoto);
     ajouterPhoto.appendChild(textPhoto);
-    modalBody.appendChild(boutonPhoto);
-    boutonPhoto.appendChild(textBouton);
+    modalContentGallery.appendChild(boutonPhoto);
+    boutonPhoto.appendChild(textBouton); 
 
     croixIcon.addEventListener('click', () => {
       modal.style.display = "none";
     });
+
+    retourIcon.addEventListener('click', () => {
+     
+    })
+    */
   });
 }
 
@@ -154,9 +172,11 @@ fetch('http://localhost:5678/api/categories')
 
 
 function addAllWorks() {
-  alldata.forEach(element => {
-    createElement(element);
-  });
+  getWorks().then(data => {
+    data.forEach(element => {
+      createGalleryElement(element);
+    });
+  })
 }
 
 
@@ -169,26 +189,23 @@ function deleteworks() {
 }
 
 function addworks(name) {
-  alldata.forEach(element => { /*Parcours chaque élément de data (Les donnaient de l'api.)*/
-    if (element.category.name == name) {
-      createElement(element);
-    }
-  });
-
+  getWorks().then (data => {
+    data.forEach(element => {
+      if (element.category.name == name) {
+        createGalleryElement(element);
+      }
+    })
+  })
 }
 
+function getWorks() {
 
-fetch('http://localhost:5678/api/works')
+return fetch('http://localhost:5678/api/works')
   .then(response => {/*renvoie toute la réponse de l'API*/
     return response.json() /*renvoie le body de la réponse de l'API en format JSON et le renvoie au then*/
   })
-  .then(data => { /*récupère les données du body de la réponse en format JSON*/
-
-    alldata = data;
-    data.forEach(element => { /*Parcours chaque élément de data (Les donnaient de l'api.)*/
-      createElement(element);
-    });
-  })
+  
+}
 
 
 window.addEventListener("load", function () {
@@ -202,7 +219,10 @@ window.addEventListener("load", function () {
     loginButton.textContent = "login";
     boutonModifier.style.display = "none";
   }
-  openmodal();
+  addAllWorks();
+  addWorksModal();
+  addClicsModal();
+  
 
   loginButton.addEventListener("click", function () {
     /*Vérifier si un token est présent dans le sessionStorage*/
