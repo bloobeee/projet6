@@ -80,6 +80,7 @@ function addClicsModal() {
   let imgModal = document.querySelector('.imgModal');
   let croix = document.querySelector('.croix');
   let buttonModal = document.querySelector('.buttonModal');
+  let flecheModifier = document.querySelector('.flecheModifier');
 
 
 
@@ -95,38 +96,12 @@ function addClicsModal() {
   buttonModal.addEventListener('click', () => {
     modalContentGallery.style.display = "none";
     modalContentAddWork.style.display = "flex";
-
-   /* let retourIcon = document.createElement('i');
-    let croixIcon = document.createElement('i');
-    let divIcon = document.createElement('div');
-    let textPhoto = document.createTextNode('Ajout photo');
-    let ajouterPhoto = document.createElement('P');
-    let boutonPhoto = document.createElement('button');
-    let textBouton = document.createTextNode('Valider');
-
-    retourIcon.classList.add('fa-solid', 'fa-arrow-left');
-    croixIcon.classList.add('fa-solid', 'fa-x');
-    divIcon.classList.add('divIcon');
-    ajouterPhoto.classList.add('ajoutPhoto');
-    boutonPhoto.classList.add('buttonPhoto');
-
-
-    modalContentGallery.appendChild(divIcon);
-    divIcon.appendChild(retourIcon);
-    divIcon.appendChild(croixIcon);
-    modalContentGallery.appendChild(ajouterPhoto);
-    ajouterPhoto.appendChild(textPhoto);
-    modalContentGallery.appendChild(boutonPhoto);
-    boutonPhoto.appendChild(textBouton); 
-
-    croixIcon.addEventListener('click', () => {
-      modal.style.display = "none";
-    });
-
-    retourIcon.addEventListener('click', () => {
-     
-    })
-    */
+  })
+  
+  flecheModifier.addEventListener('click', () => {
+    modalContentGallery.style.display = "flex";
+    modalContentAddWork.style.display = "none";
+    
   });
 }
 
