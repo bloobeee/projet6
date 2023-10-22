@@ -462,7 +462,7 @@ html {
 #title{
 	padding: 20px;
 }
-#category{
+.category{
 	padding: 20px;
 }
 
@@ -475,4 +475,8 @@ html {
 .modalContentGallery{
 	flex-direction: column;
 
+}
+
+.fa-image{
+	font-size: 76px;
 }

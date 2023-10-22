@@ -87,15 +87,16 @@
 					</div>
 					<h2 class="textModal">Ajout Photo</h2>
 					<div class="ajoutIMG">
+						<img src="" alt="" class="imagePreview">
 						<i class="fa-regular fa-image"></i>
-						<button class="boutonAjoutPhoto">+ Ajouter photo</button>
+						<input type="file" class="boutonAjoutPhoto" id="boutonAjoutPhoto"/>
 						<p>jpg, png : 4mo max</p>
 					</div>
 					<div class="textImg">
-						<p>Titre</p>
-						<input type="text" name="title" id="title">
-						<p>Categorie</p>
-						<input type="select" name="category" id="category">
+						<label for="title">Titre</label>
+						<input type="text" name="title" id="title" id ="title">
+						<label for="category">Categorie</label>
+						<select name="category" class="category" id="category"></select>
 					</div>
 					<div class="boutonValide">
 						<button class="buttonPhoto">Valider</button>

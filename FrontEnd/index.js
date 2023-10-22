@@ -28,7 +28,7 @@ function createfiltres(data) {
 
   allButton.addEventListener('click', () => {
     deleteworks();
-    addAllWorks(); 
+    addAllWorks();
   });
 
 
@@ -47,7 +47,7 @@ function createfiltres(data) {
 
 
 function addWorksModal() {
-  
+
   let modalBody = document.querySelector('.modalContentGallery');
   let imgModal = document.querySelector('.imgModal');
 
@@ -65,7 +65,7 @@ function addWorksModal() {
       imgModal.appendChild(figure);
       figure.appendChild(img);
       figure.appendChild(deleteIcon);
-  
+
       deleteIcon.addEventListener('click', trashWork);
     })
   })
@@ -97,11 +97,11 @@ function addClicsModal() {
     modalContentGallery.style.display = "none";
     modalContentAddWork.style.display = "flex";
   })
-  
+
   flecheModifier.addEventListener('click', () => {
     modalContentGallery.style.display = "flex";
     modalContentAddWork.style.display = "none";
-    
+
   });
 }
 
@@ -164,7 +164,7 @@ function deleteworks() {
 }
 
 function addworks(name) {
-  getWorks().then (data => {
+  getWorks().then(data => {
     data.forEach(element => {
       if (element.category.name == name) {
         createGalleryElement(element);
@@ -175,11 +175,11 @@ function addworks(name) {
 
 function getWorks() {
 
-return fetch('http://localhost:5678/api/works')
-  .then(response => {/*renvoie toute la réponse de l'API*/
-    return response.json() /*renvoie le body de la réponse de l'API en format JSON et le renvoie au then*/
-  })
-  
+  return fetch('http://localhost:5678/api/works')
+    .then(response => {/*renvoie toute la réponse de l'API*/
+      return response.json() /*renvoie le body de la réponse de l'API en format JSON et le renvoie au then*/
+    })
+
 }
 
 
@@ -197,7 +197,7 @@ window.addEventListener("load", function () {
   addAllWorks();
   addWorksModal();
   addClicsModal();
-  
+
 
   loginButton.addEventListener("click", function () {
     /*Vérifier si un token est présent dans le sessionStorage*/
@@ -217,5 +217,63 @@ window.addEventListener("load", function () {
       window.location.href = "login.html";
     }
   });
-});
+
+  let boutonAjoutPhoto = document.querySelector(".boutonAjoutPhoto");
+  let imagePreview = document.querySelector(".imagePreview");
+
+  boutonAjoutPhoto.addEventListener("change", function () {
+    let file = document.querySelector(".boutonAjoutPhoto").files[0];
+    let image=URL.createObjectURL(file);
+    imagePreview.src = image;
+  })
+
+
+
+  fetch('http://localhost:5678/api/categories')
+  .then(response => {
+    return response.json();
+  })
+  .then(data => {
+    let category = document.querySelector(".category");
+    data.forEach(element => {
+      let option = document.createElement("option");
+      option.value = element.id;
+      option.textContent = element.name;
+      category.appendChild(option);
+    })
+
+  });
+
+  let buttonPhoto = document.querySelector(".buttonPhoto");
+
+  buttonPhoto.addEventListener("click", function () {
+    const boutonAjoutPhoto = document.getElementById("boutonAjoutPhoto");
+    const title = document.getElementById("title");
+    const category = document.getElementById("category");
+    console.log(boutonAjoutPhoto.files[0]);
+    console.log(title.value);
+    console.log(category.value);
+    const formData = new FormData();
+    formData.append("image", boutonAjoutPhoto.files[0]);
+    formData.append("title", title.value);
+    formData.append("category", category.value);
+    
+    const token = sessionStorage.getItem("token");
+    fetch("http://localhost:5678/api/works", {
+      method: "POST",
+      body: formData,
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }).then(response => {
+      console.log(response);
+    })
+    })
+  })
+
+
+  
+
+
+
 let isPageRefreshed = false
