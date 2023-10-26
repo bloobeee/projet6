@@ -20,15 +20,26 @@ function createGalleryElement(element) {
 
 function createfiltres(data) {
   let gallery = document.querySelector('.gallery');
-  let firstButton = gallery.firstElementChild;
+  let portfolio = document.querySelector('#portfolio');
+  
+
   let allButton = document.createElement('button');
+  let divfiltre = document.createElement('div');
+
+  divfiltre.classList.add("divFiltre");
   allButton.textContent = 'Tous';
   allButton.classList.add("filtre");
-  gallery.insertBefore(allButton, firstButton);
+  allButton.classList.add("green");
+
+
+  divfiltre.appendChild(allButton);
+  portfolio.insertBefore(divfiltre, gallery);
+ 
 
   allButton.addEventListener('click', () => {
     deleteworks();
     addAllWorks();
+    addGreen(allButton);
   });
 
 
@@ -36,12 +47,22 @@ function createfiltres(data) {
     let name = document.createElement('button');
     name.textContent = element.name;
     name.classList.add("filtre");
-    gallery.appendChild(name);
+    divfiltre.appendChild(name);
     name.addEventListener('click', () => {
       deleteworks();
       addworks(element.name);
+      addGreen(name);
     });
   });
+}
+
+
+function addGreen(btn){
+  let whiteBtn = document.querySelectorAll('.filtre');
+  whiteBtn.forEach(element => {
+    element.classList.remove("green");
+  })
+  btn.classList.add("green");
 
 }
 
