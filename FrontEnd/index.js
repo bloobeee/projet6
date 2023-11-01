@@ -102,6 +102,7 @@ function addClicsModal() {
   let croix = document.querySelector('.croix');
   let buttonModal = document.querySelector('.buttonModal');
   let flecheModifier = document.querySelector('.flecheModifier');
+  let croix2 = document.querySelector('.croix2');
 
 
 
@@ -110,6 +111,9 @@ function addClicsModal() {
     modalContentAddWork.style.display = "none";
 
     croix.addEventListener('click', () => {
+      modal.style.display = "none";
+    })
+    croix2.addEventListener('click', () => {
       modal.style.display = "none";
     })
   })
@@ -206,14 +210,17 @@ function getWorks() {
 
 window.addEventListener("load", function () {
   let loginButton = document.getElementById("login");
+  let editor = document.getElementById("edit");
   let boutonModifier = document.querySelector('.boutonModifier');
   /*Vérifier si un token est présent dans le sessionStorage*/
   if (sessionStorage.getItem("token")) {
     loginButton.textContent = "logout";
     boutonModifier.style.display = "flex";
+    editor.style.display = "flex";
   } else {
     loginButton.textContent = "login";
     boutonModifier.style.display = "none";
+    editor.style.display = "none";
   }
   addAllWorks();
   addWorksModal();
